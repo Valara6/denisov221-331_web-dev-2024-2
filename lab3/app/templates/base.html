@@ -40,6 +40,11 @@
 
                             {% endif%}
                         </li>
+                        {% if current_user.is_authenticated%}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ url_for('secret') }}">Секретная страница</a>
+                            </li>
+                        {% endif %}
                        
                     </ul>
                 </div>
@@ -47,6 +52,13 @@
         </nav>
     </header>
     <main class="container py-5">
+        {%with  msgs = get_flashed_messages(True)%}
+        {% for category, msg in msgs%}
+            <div class="alert {{ category }}" role="alert">
+                {{msg}}
+            </div>
+        {% endfor %}
+        {%endwith%}
         {% block content %}
         {% endblock %}
     </main>

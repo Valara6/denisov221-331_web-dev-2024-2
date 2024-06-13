@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    {% if data != [] %}
+    {% for value in data %}
+    <table class="table mt-3  table-hover">
+        <thead>
+
+        </thead>
+        <tbody>
+            <tr>
+                <th rowspan="3" class="text-center"><img class="img-fluid rounded-circle" width="100"
+                        src="{{ url_for('image', filename='616fb4b5-ce9d-484c-be27-9f6aafc2077e_radio.jpg') }}" alt="">
+                </th>
+                <td>Книга: {{ value.name }}</td>
+                <td class="text-end px-5">Оценка: {{ value.rating }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Статус: {{ value.status }}</td>
+
+            </tr>
+            <tr>
+
+                <td colspan="2" class="text-justify">
+                    {%if value.text == '' %}
+                    Без Комментарий
+                    {% else %}
+                    Отзыв: {{ value.text }}
+                    {% endif%}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% endfor %}
+    {% else %}
+    <h1>Вы еще не оставили отзыв книгам </h1>
+
+    {% endif %}
+    {% from 'pagination.html' import pagination %}
+    
+    {{ pagination(count, page,'')}}
+</div>
+{% endblock %}

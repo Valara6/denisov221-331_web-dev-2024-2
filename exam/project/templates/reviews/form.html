@@ -1,0 +1,23 @@
+<form method="POST" action="{{ url_for('reviews.create_review', book_id=book_id) }}" enctype="multipart/form-data">
+    <section class="container">
+    <h2 class="text-center">Добавить отзыв</h2>
+    <div class="mb-3">
+        <label for="exampleFormControlSelect1">Оценка книги</label>
+        <select class="form-control" name="rating" id="exampleFormControlSelect1">
+          <option value="5">отлично </option>
+          <option value="4">хорошо</option>
+          <option value="3">удовлетворительно</option>
+          <option value="2">неудовлетворительно</option>
+          <option value="1">плохо</option>
+          <option value="0">ужасно</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="review_text">Текст отзыва</label>
+        <textarea class="form-control" name="text" id="review_text" cols="10" rows="10"></textarea>
+    </div>
+    <div class="mb-3 text-center">
+        <input type="submit" class="btn btn-dark" value="Сохранить">
+    </div>
+    </section>
+</form>

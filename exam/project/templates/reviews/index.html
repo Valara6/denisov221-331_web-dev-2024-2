@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    {%if current_user_review|length == 0%}
+    {% include 'reviews/form.html' %}
+    {%else%}
+    <h2 class="mb-3 text-center text-uppercase font-weight-bold">Ваш отзыв</h2>
+    <section class="about  mb-5 border border-dark">
+        <div class="mt-3">
+
+            <div class="author">
+                <p>Автор: {{ current_user_review[0].user_name}}</p>
+            </div>
+            <div class="rating">
+                {% if current_user_review[0].rating==0 %}
+                <p>Оценка: ужасно</p>
+                {%elif current_user_review[0].rating==1%}
+                <p>Оценка: плохо</p>
+                {%elif current_user_review[0].rating==2%}
+                <p>Оценка: неудовлетворительно</p>
+                {%elif current_user_review[0].rating==3%}
+                <p>Оценка: удовлетворительно</p>
+                {%elif current_user_review[0].rating==4%}
+                <p>Оценка: хорошо</p>
+                {%elif current_user_review[0].rating==5%}
+                <p>Оценка: отлично </p>
+                {%endif%}
+            </div>
+
+            <div class="border">
+                <div class=" text-justify border border-info">
+                    <p>{{current_user_review[0].text}}</p>
+                </div>
+            </div>
+            <div class="border-bottom border-dark">
+                <p>Дата создания: {{current_user_review[0].date}}</p>
+                <div class="rating">
+                    {% if current_user_review[0].review_status==1 %}
+                    <p>Статус отзыва: На рассмотрении</p>
+                    {%elif current_user_review[0].review_status==2%}
+                    <p>Статус отзыва: Одобрен</p>
+                    {%elif current_user_review[0].review_status==3%}
+                    <p>Статус отзыва: Отклонён</p>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </section>
+    {%endif%}
+    <h2 class="mb-3 text-center text-uppercase font-weight-bold">Отзывы</h2>
+    <section class="about  mb-5 border border-dark">
+        {%if count==0%}
+        <p class="text-center">Для данного курса нет отзывов</p>
+        {%endif%}
+        {%for review in reviews%}
+        <div class="mt-3">
+
+            <div class="author">
+                <p>Автор: {{ review.user_name}}</p>
+            </div>
+            <div class="rating">
+                {% if review.rating==0 %}
+                <p>Оценка: ужасно</p>
+                {%elif review.rating==1%}
+                <p>Оценка: плохо</p>
+                {%elif review.rating==2%}
+                <p>Оценка: неудовлетворительно</p>
+                {%elif review.rating==3%}
+                <p>Оценка: удовлетворительно</p>
+                {%elif review.rating==4%}
+                <p>Оценка: хорошо</p>
+                {%elif review.rating==5%}
+                <p>Оценка: отлично </p>
+                {%endif%}
+            </div>
+
+            <div class="border">
+                <div class=" text-justify border border-info">
+                    <p>{{review.text}}</p>
+                </div>
+            </div>
+            <div class="border-bottom border-dark">
+                <p>Дата создания: {{review.date}}</p>
+            </div>
+        </div>
+        {%endfor%}
+    </section>
+    {% from 'pagination.html' import pagination %}
+    
+    {{ pagination(count, page,book_id)}}
+
+    {% endblock %}
+</div>

@@ -1,0 +1,27 @@
+.previews{
+    border: black dotted;
+    height: 20em;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.previews img {
+    max-width: 100%; /* Ограничение по ширине */
+    max-height: 100%; /* Ограничение по высоте */
+    border: none;
+
+}
+
+.book-logo{
+
+
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.book-logo img {
+    max-width: 100%; /* Ограничение по ширине */
+    max-height: 100%; /* Ограничение по высоте */
+    border: none;
+
+}

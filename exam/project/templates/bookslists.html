@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block additional_links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="h-100 text-center d-flex p-3 bg-light">
+  <div class="m-auto">
+    <h1 class="title mb-5 font-weight-bold">Книжный портал</h1>
+
+    <div class="container">
+      <p class="description w-75 mb-5 px-3 mx-auto">
+        Добро пожаловать на наш книжный портал, где вы найдете широкий выбор литературы на любой вкус и предпочтение. Погрузитесь в мир захватывающих сюжетов, увлекательных приключений и глубоких философских мыслей, и откройте для себя новые увлекательные миры, путешествуя по страницам наших книг. Позвольте книгам стать вашим верным спутником в мире бесконечных возможностей и вдохновения!
+      </p>
+      {%for book in range(books | length) %}
+      <div class="books-list container-fluid mt-3 mb-3">
+        <div class="row p-3 border rounded mb-3" data-url="#">
+          <div class="col-md-3 mb-3 mb-md-0 d-flex align-items-center justify-content-center">
+            <div class="book-logo">
+              <img class="img-fluid" src="{{ url_for('image', filename=books[book].filename) }}">
+            </div>
+          </div>
+          <div class="col-md-9 flex-row">
+            <div class="d-flex">
+              <h4 class="text-uppercase">{{books[book].name}}</h4>
+              <p class="ms-auto rating">
+                {{ ratings[book].avg_rating }} <span>★</span> <span>Рейтинг книги</span>
+              </p>
+            </div>
+            <div class="col-md-9 d-flex justify-content-between">
+              <p class="text-muted my-3">Автор: {{books[book].author}}</p>
+              <p class="text-muted my-3">Жанры: {{books[book].genres_name}}</p>
+              <p class="text-muted my-3">Год издания: {{books[book].year}}</p>
+              <p class="text-muted my-3">Число рецензий: {{ ratings[book].review_count }}</p>
+            </div>
+          </div>
+          <div class="justify-content-between">
+            <div class="actions">
+              {% if current_user.is_authenticated and current_user.UserRights('view') %}
+              <a class="btn btn-primary" href="{{url_for('show_book',book_id=books[book].id)}}">Посмотреть</a>
+              {% endif %}
+              {% if current_user.is_authenticated and current_user.UserRights('edit') %}
+              <a class="btn btn-warning" href="{{ url_for('edit', book_id = books[book].id) }}">Редактировать</a>
+              {% endif %}
+              {% if current_user.is_authenticated and current_user.UserRights('create') %}
+              <button type="button" class="btn btn-primary"
+                data-action="{{url_for('delete_book', book_id=books[book].id)}}" data-bs-toggle="modal"
+                data-bs-target="#deleteBook">Удалить</button>
+              {% endif %}
+            </div>
+          </div>
+          <div class="modal fade" id="deleteBook" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Удаление книги</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Вы действительно хотите удалить книгу {{books[book].name}} <span class="name-user"><span>?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                  <form action="{{url_for('delete_book', book_id=books[book].id)}}" class="modal-form" method="post">
+                    <button type="submit" class="btn btn-primary">Да</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+      {% if current_user.is_authenticated and current_user.UserRights('create') %}
+      <div class="text-center my-3">
+        <a class="btn btn-lg btn-dark" href="{{ url_for('create') }}">Добавить книгу</a>
+      </div>
+      {% endif %}
+
+      {% from 'pagination.html' import pagination %}
+      {{ pagination(count, page,'')}}
+    </div>
+  </div>
+  {% endblock %}

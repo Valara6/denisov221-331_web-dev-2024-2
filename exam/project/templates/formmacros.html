@@ -1,0 +1,99 @@
+{% macro creater(form, header) %}
+<div class="container">
+    <h1 class="text-center">{{ header }}</h1>
+    <form action="{{ url_for('create' if request.endpoint == 'create' else 'edit', book_id=book_id if request.endpoint == 'edit' else None) }}" method="post" enctype="multipart/form-data" class="g-3 mt-5 mx-auto needs-validation" autocomplete="off" novalidate>
+    
+        {{ form.hidden_tag() }}
+        <div class="d-flex row  mx-auto">
+            <div class="col-md-5 col-sm-12 mx-auto">
+                <div class="form-group">
+                    {{ form.title.label(class="form-label") }}
+                    {{ form.title(class="form-control " + ("is-invalid" if form.title.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.year.label(class="form-label") }}
+                    {{ form.year(class="form-control " + ("is-invalid" if form.year.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.year.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.publisher.label(class="form-label") }}
+                    {{ form.publisher(class="form-control " + ("is-invalid" if form.publisher.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.publisher.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.author.label(class="form-label") }}
+                    {{ form.author(class="form-control " + ("is-invalid" if form.author.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.author.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.pages.label(class="form-label") }}
+                    {{ form.pages(class="form-control " + ("is-invalid" if form.pages.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.pages.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.genres.label(class="form-label") }}
+                    {{ form.genres(class="form-control " + ("is-invalid" if form.genres.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.genres.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(class="form-label") }}
+                    {{ form.description(class="form-control " + ("is-invalid" if form.description.errors else "")) }}
+                    <div class="invalid-feedback">
+                        {% for error in form.description.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% if request.endpoint == "create" %}
+            <div class="col-md-5 col-sm-12 mx-auto">
+                
+            <div class="form-group">
+                    {{ form.cover.label(class="form-label") }}
+                    {{ form.cover(accept="image/*",class="form-control " + ("is-invalid" if form.cover.errors else "")) }}
+                    <div class="previews mt-3 rounded d-flex justify-content-center align-items-center dropzone" id="dropzone">
+                        <img id="image" class="img-fluid img-thumbnail" src="{{ url_for('static', filename="img/vector-upload-icon-flat-design-style_1039903-50.png") }}">
+                    </div>
+                    <div class="invalid-feedback" id="msg-image">
+                        {% for error in form.cover.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+            </div>
+
+            {% endif %}
+
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end my-3 ml-auto ">
+            <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Отправить">
+        </div>
+    </form>
+</div>
+{% endmacro %}

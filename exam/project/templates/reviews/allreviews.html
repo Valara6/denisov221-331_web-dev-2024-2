@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    {% if data != [] %}
+    {% for value in data %}
+    <table class="table mt-3 table-hover">
+        <thead>
+
+        </thead>
+        <tbody>
+            <tr>
+                <th rowspan="4" class="text-center"><img class="img-fluid rounded-circle" width="100"
+                        src="{{ url_for('image', filename='616fb4b5-ce9d-484c-be27-9f6aafc2077e_radio.jpg') }}" alt="">
+                </th>
+                <td>Книга: {{ value.name }}</td>
+                <td class="text-end px-5">Оценка: {{ value.rating }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-justify">Пользователь: {{ value.login }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Статус: {{ value.status }}</td>
+            </tr>
+            <tr>
+
+                <td colspan="2" class="text-justify">
+                    {%if value.text == '' %}
+                    Без Комментария
+                    {% else %}
+                    {{ value.text }}
+                    {% endif%}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary mb-3" href="{{ url_for('reviews.statusSetter', rev_id=value.id) }}">Рассмореть</a>
+    {% endfor %}
+    {% else %}
+    <h1>Заявки отсутствуют</h1>
+
+    {% endif %}
+    {% from 'pagination.html' import pagination %}
+    
+    {{ pagination(count, page,'')}}
+</div>
+{% endblock %}

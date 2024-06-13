@@ -1,0 +1,30 @@
+{% macro pagination(count, page,book_id)%}
+
+{%if request.endpoint=='reviews.index'%}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+
+      <li class="page-item {% if page==1 %} disabled d-none {% endif%}"><a class="page-link" href="{{ url_for(request.endpoint, book_id=book_id, page=page-1)}}">Previous</a></li>
+      {% set begin = [1, page - 2] | max %}
+      {% set end = [ count, page + 2 ] | min %}
+      {% for  i in range(begin,end+1) %}
+        <li class="page-item {% if i == page %} active {% endif%}" ><a class="page-link" href="{{ url_for(request.endpoint, book_id=book_id, page=i)}}">{{ i }}</a></li>
+      {% endfor %}
+      <li class="page-item {% if page>=end%} disabled d-none {% endif%}"><a class="page-link" href="{{ url_for(request.endpoint, book_id=book_id, page=page+1)}}">Next</a></li>
+    </ul>
+</nav>
+{%else%}
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+
+    <li class="page-item {% if page==1 %} disabled d-none {% endif%}"><a class="page-link" href="{{ url_for(request.endpoint, page=page-1)}}">Previous</a></li>
+    {% set begin = [1, page - 2] | max %}
+    {% set end = [ count, page + 2 ] | min %}
+    {% for  i in range(begin,end+1) %}
+      <li class="page-item {% if i == page %} active {% endif%}" ><a class="page-link" href="{{ url_for(request.endpoint, page=i)}}">{{ i }}</a></li>
+    {% endfor %}
+    <li class="page-item {% if page>=end%} disabled d-none {% endif%}"><a class="page-link" href="{{ url_for(request.endpoint, page=page+1)}}">Next</a></li>
+  </ul>
+</nav>
+{%endif%}
+{% endmacro %}

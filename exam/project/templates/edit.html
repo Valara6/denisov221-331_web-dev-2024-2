@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% from 'formmacros.html' import creater with context %}
+
+{% block additional_links %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+    {{ creater(form, 'Форма для редактирования') }}
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+
+{% endblock %}
+

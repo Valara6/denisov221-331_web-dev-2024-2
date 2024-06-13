@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center">Форма логина</h1>
+    <form method="POST" class="row g-3 mx-auto needs-validation" action="{{ url_for('auth.login') }}" autocomplete="off" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="d-flex flex-column mx-auto">
+        <div class="col-md-4 mx-auto">
+            <label class="form-label" for="login">Логин</label>
+            <input class="form-control {% if form.login.errors %}is-invalid{% endif %}" id="login"  name="login" required="required" type="text" value="{{ form.login.data or '' }}">
+            <div class="invalid-feedback">
+                {% for error in form.login.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-4 mx-auto">
+            <label class="form-label" for="password">Пароль</label>
+            <input class="form-control {% if form.password.errors %}is-invalid{% endif %}" id="password" name="password" required="required" type="password" value="{{ form.password.data or '' }}">
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-check mt-3 mx-auto">
+            <input class="form-control form-check-input" id="remember" name="remember" type="checkbox" value="y" {% if form.remember.data %}checked{% endif %}>
+            <label class="form-label ms-3 form-check-label" for="remember">Запомнить меня</label>
+        </div>
+
+        <div class="col-4 mt-3 mx-auto">
+            <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Вход">
+        </div>
+    </div>
+</form>
+
+{% endblock %}
